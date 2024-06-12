@@ -14,8 +14,8 @@ from transformers import (
     )
 
 def model_loader(dataset, max_length, pretrained_model): 
-    width, height = helpers.image_size(dataset)
-    image_size = [height, width]
+    ori_size = helpers.image_size(dataset)
+    image_size = ori_size[::-1]
 
     config = VisionEncoderDecoderConfig.from_pretrained(pretrained_model)
     config.encoder.image_size = image_size
