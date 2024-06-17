@@ -1,5 +1,7 @@
 import random
 
+from pytorch_lightning.callbacks import Callback
+
 def random_example(dataset): 
     # Create a random seed to select a sample
     random_num = random.randint(0, len(dataset['train']))
@@ -17,7 +19,7 @@ def image_size(dataset):
     
     return img_size
 
-class PushToHubCallback():
+class PushToHubCallback(Callback):
     def on_train_epoch_end(self, trainer, pl_module):
         print(f"Pushing model to the hub, epoch {trainer.current_epoch}")
         pl_module.processor.push_to_hub("Jac-Zac/thesis_donut",

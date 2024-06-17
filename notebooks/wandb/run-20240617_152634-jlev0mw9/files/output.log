@@ -1,0 +1,26 @@
+  | Name  | Type                      | Params | Mode
+-----------------------------------------------------------
+0 | model | VisionEncoderDecoderModel | 201 M  | eval
+-----------------------------------------------------------
+201 M     Trainable params
+0         Non-trainable params
+201 M     Total params
+807.461   Total estimated model params size (MB)
+Using 16bit Automatic Mixed Precision (AMP)
+/Users/WilliamLiu/miniforge3/envs/HeR-T/lib/python3.12/site-packages/torch/amp/grad_scaler.py:131: UserWarning: torch.cuda.amp.GradScaler is enabled, but CUDA is not available.  Disabling.
+  warnings.warn(
+GPU available: True (mps), used: True
+TPU available: False, using: 0 TPU cores
+HPU available: False, using: 0 HPUs
+Using 16bit Automatic Mixed Precision (AMP)
+GPU available: True (mps), used: True
+TPU available: False, using: 0 TPU cores
+HPU available: False, using: 0 HPUs
+/Users/WilliamLiu/miniforge3/envs/HeR-T/lib/python3.12/site-packages/pytorch_lightning/trainer/configuration_validator.py:70: You defined a `validation_step` but have no `val_dataloader`. Skipping val loop.
+  | Name  | Type                      | Params | Mode
+-----------------------------------------------------------
+0 | model | VisionEncoderDecoderModel | 201 M  | eval
+-----------------------------------------------------------
+201 M     Trainable params
+0         Non-trainable params
+201 M     Total params

@@ -1,0 +1,73 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    python_version: 3.12.2
+    cli_version: 0.16.5
+    framework: huggingface
+    huggingface_version: 4.41.2
+    is_jupyter_run: true
+    is_kaggle_kernel: false
+    start_time: 1718630794.0
+    t:
+      1:
+      - 1
+      - 5
+      - 9
+      - 11
+      - 41
+      - 49
+      - 51
+      - 53
+      - 55
+      - 103
+      2:
+      - 1
+      - 5
+      - 9
+      - 11
+      - 41
+      - 49
+      - 51
+      - 53
+      - 55
+      - 103
+      3:
+      - 7
+      - 13
+      - 23
+      4: 3.12.2
+      5: 0.16.5
+      6: 4.41.2
+      8:
+      - 1
+      - 4
+      - 5
+      13: darwin-arm64
+    m:
+    - 1: trainer/global_step
+      6:
+      - 3
+config:
+  desc: null
+  value:
+    max_epochs: 20
+    val_check_interval: 0.25
+    check_val_every_n_epoch: 1
+    gradient_clip_val: 1.0
+    num_training_samples_per_epoch: 36760
+    lr: 2.5e-05
+    weight_decay: 2.0e-05
+    dropout_rate: 0.2
+    train_batch_sizes:
+    - 8
+    val_batch_sizes:
+    - 1
+    num_nodes: 1
+    warmup_steps: 2500
+    result_path: /kaggle/working/output/result
+    verbose: true
+processor:
+  desc: null
+  value: null
