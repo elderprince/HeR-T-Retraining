@@ -98,7 +98,7 @@ class DonutModelPLModule(pl.LightningModule):
         train_loader = DataLoader(
             self.train_dataset,
             self.config['train_batch_sizes'],
-            num_workers=self.config['num_workers'],
+            # num_workers=self.config['num_workers'],
             pin_memory=True,
             worker_init_fn=self.seed_worker,
             generator=self.g,

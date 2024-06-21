@@ -4,3 +4,5 @@ data/img_original
 data/img_test
 utils/confidential.py
 notebooks/wandb
+outputs
+results
