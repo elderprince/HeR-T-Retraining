@@ -1,6 +1,7 @@
 import re
 import math
 import torch
+import random
 import numpy as np
 import pytorch_lightning as pl
 
@@ -10,9 +11,10 @@ from torch.nn.utils.rnn import pad_sequence
 from torch.optim.lr_scheduler import LambdaLR
 from pytorch_lightning.utilities import rank_zero_only
 from torchvision.transforms import ToPILImage
+from torch.utils.data import DataLoader
 
 class DonutModelPLModule(pl.LightningModule):
-    def __init__(self, config, processor, model):
+    def __init__(self, config, processor, model, train_dataset, val_dataset):
         super().__init__()
         self.config = config
         self.processor = processor
@@ -20,6 +22,10 @@ class DonutModelPLModule(pl.LightningModule):
         model.config.hidden_dropout_prob = dropout_rate
         model.config.attention_probs_dropout_prob = dropout_rate
         self.model = model
+        self.train_dataset = train_dataset
+        self.val_dataset = val_dataset
+        self.g = torch.Generator()
+        self.g.manual_seed(config['seed'])
         # save hyperparameters
         self.save_hyperparameters(ignore=['model'])
 
@@ -87,3 +93,32 @@ class DonutModelPLModule(pl.LightningModule):
         optimizer = torch.optim.Adam(self.parameters(), lr=self.config.get("lr"))
     
         return optimizer
+    
+    def train_dataloader(self):
+        train_loader = DataLoader(
+            self.train_dataset,
+            self.config['train_batch_sizes'],
+            num_workers=self.config['num_workers'],
+            pin_memory=True,
+            worker_init_fn=self.seed_worker,
+            generator=self.g,
+            shuffle=True,
+        )
+
+        return train_loader
+
+    def val_dataloader(self):
+        val_loader = DataLoader(
+            self.val_dataset,
+            self.config['val_batch_sizes'],
+            pin_memory=True,
+            shuffle=False,
+        )
+        
+        return val_loader
+
+    @staticmethod
+    def seed_worker(worker_id):
+        worker_seed = torch.initial_seed() % 2 ** 32
+        np.random.seed(worker_seed)
+        random.seed(worker_seed)
