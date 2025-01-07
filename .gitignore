@@ -2,7 +2,14 @@ data/img_960x1280
 data/img_1200x1600
 data/img_original
 data/img_test
+data/italy_names.csv
 utils/confidential.py
 notebooks/wandb
+notebooks/HeR-T-trial-241201
 outputs
 results
+checkpoints
+models/donut
+models/donut-base
+scripts
+training.sh

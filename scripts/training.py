@@ -25,14 +25,21 @@ from models.donut_pytorch_lightning import DonutModelPLModule
 from pytorch_lightning.loggers import WandbLogger
 from pytorch_lightning.callbacks import EarlyStopping
 
-image_path = "/Users/WilliamLiu/HeR_T_retaining/data/img_test"
+from transformers import (
+    DonutProcessor, 
+    VisionEncoderDecoderModel, 
+    VisionEncoderDecoderConfig
+    )
+
+image_path = "/leonardo_work/IscrC_HeR-T/weiwei/data/20240517/HeR-T_data/img_test"
 max_length = 768
 
 dataset = donut_dataset.data_loader(image_path)
 print('Data Loading completes.')
 
-processor, model = donut_dataset.model_loader(dataset, max_length, 
-                                              "naver-clova-ix/donut-base")
+# processor, model = donut_dataset.model_loader(dataset, max_length, "naver-clova-ix/donut-base")
+processor = DonutProcessor.from_pretrained("/leonardo_work/IscrC_HeR-T/weiwei/HeR-T-Retraining/models")
+model = VisionEncoderDecoderModel.from_pretrained("/leonardo_work/IscrC_HeR-T/weiwei/HeR-T-Retraining/models")
 print('Processor and Model are loaded.')
 
 processor.image_processor.size = helpers.image_size(dataset)
@@ -72,7 +79,7 @@ config = {
     'val_batch_sizes': 1,
     'num_nodes': 1,
     'warmup_steps': 2500,
-    'result_path': "/Users/WilliamLiu/HeR_T_retaining/results",
+    'result_path': "/leonardo_work/IscrC_HeR-T/weiwei/HeR-T-Retraining/results",
     'verbose': True, 
     'seed': 16, 
     'num_workers': 2
@@ -82,22 +89,23 @@ model_lightning = DonutModelPLModule(config, processor, model, train_dataset, va
 print('PyTorch Lightning Model has been set up.')
 
 # api key so that it doesn't ask me for it
-wandb.login(key=confidential.api_key)
-wandb_logger = WandbLogger(project="HeR-T-trial", name="localTrial")
+wandb.init(mode="offline")
+# wandb.login(key=confidential.api_key)
+wandb_logger = WandbLogger(project="HeR-T-trial", name="cinecaTrial")
 # use default patiente
 early_stop_callback = EarlyStopping(monitor="val_edit_distance", verbose=True, mode="min")
 
 pushToHub = push_to_hub.PushToHubCallback()
 trainer = pl.Trainer(
-        accelerator="mps",
+        accelerator="gpu",
         #accelerator="gpu",
-        devices=1,
+        devices=4,
         # strategy="xla_debug",
         max_epochs=config['max_epochs'],
         val_check_interval=config['val_check_interval'],
         check_val_every_n_epoch=config['check_val_every_n_epoch'],
         gradient_clip_val=config['gradient_clip_val'],
-        precision='bf16', # we'll use mixed precision
+        precision='bf16-mixed', # we'll use mixed precision
         #precision=16, # we'll use mixed precision
         num_sanity_val_steps=0,
         logger=wandb_logger,
