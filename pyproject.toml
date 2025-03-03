@@ -1,0 +1,24 @@
+# Choosing a build backend:
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "her_t_pytorch_lightning"
+version = "0.0.1"
+description = "This is the official repository of the manuscript: Application of computer vision to the automated extraction of metadata from natural history specimen labels. A case study on herbarium specimens"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "Weiwei Liu", email = "weiweiliu2018@outlook.com" }]
+dynamic = ["dependencies"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["scripts", "tests", "shell", "experiments"]
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
+
+[project.optional-dependencies]
+test = ["pytest"]
