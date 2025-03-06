@@ -3,10 +3,11 @@ import pytorch_lightning as pl
 from pytorch_lightning.loggers import WandbLogger
 from pytorch_lightning.callbacks import EarlyStopping
 
+from her_t_pytorch_lightning.her_t_pytorch_lightning import DonutModelPLModule
+
 from her_t_pytorch_lightning import (
-    dataset_loader,
     utils,
-    DonutModelPLModule
+    dataset_loader
     )
 
 from transformers import (
@@ -14,19 +15,22 @@ from transformers import (
     VisionEncoderDecoderModel
     )
 
-kwargs = utils.read_config('experiments/config')
+kwargs = utils.read_config('experiments/train_config')
 
 image_path = kwargs['image_path']
 max_length = kwargs['max_length']
-pretrain_model = kwargs['pretrain_model']
+pretrained_model = kwargs['pretrained_model']
+pretrained_processor = kwargs['pretrained_processor']
 project_name = kwargs['project_name']
 log_name = kwargs['log_name']
+save_dir = kwargs['save_dir']
+result_dir = kwargs['result_dir']
 
 dataset = dataset_loader.data_loader(image_path)
 print('Data Loading completes.')
 
-processor = DonutProcessor.from_pretrained(pretrain_model)
-model = VisionEncoderDecoderModel.from_pretrained(pretrain_model)
+processor = DonutProcessor.from_pretrained(pretrained_processor)
+model = VisionEncoderDecoderModel.from_pretrained(pretrained_model)
 print('Processor and Model are loaded.')
 
 processor.image_processor.size = utils.image_size(dataset)
@@ -59,7 +63,24 @@ val_dataset = dataset_loader.DonutDataset(image_path,
                                           )
 print("DonutDataset is loaded.")
 
-pl_config = utils.read_config('experiments/pl_config')
+pl_config = {
+    'max_epochs': 20, 
+    'val_check_interval': 0.25, 
+    'check_val_every_n_epoch': 1, 
+    'gradient_clip_val': 1.0, 
+    'num_training_samples_per_epoch': 36760, 
+    'lr': 2.5e-5,  # or 2e-5
+    'weight_decay': 2e-5, 
+    'dropout_rate': 0.2, 
+    'train_batch_sizes': 8, 
+    'val_batch_sizes': 8, 
+    'num_nodes': 1, 
+    'warmup_steps': 2500, 
+    'result_path': '/leonardo_work/IscrC_HeR-T/weiwei/HeR-T-Fine-tuning/result',
+    'verbose': True, 
+    'seed': 16, 
+    'num_workers': 4
+}
 model_lightning = DonutModelPLModule(pl_config, processor, model, 
                                      train_dataset, val_dataset)
 print('PyTorch Lightning Model has been set up.')
@@ -68,21 +89,23 @@ wandb.init(mode="offline")
 wandb_logger = WandbLogger(project=project_name, name=log_name)
 early_stop_callback = EarlyStopping(monitor="val_edit_distance", 
                                     verbose=True, mode="min", patience=7)
-pushToHub = utils.PushToHubCallback()
+pushToHub = utils.PushToHubCallback(save_dir, result_dir)
 
 trainer = pl.Trainer(
-        accelerator="gpu",
-        devices=4,
-        # strategy="xla_debug",
-        max_epochs=config['max_epochs'],
-        val_check_interval=config['val_check_interval'],
-        check_val_every_n_epoch=config['check_val_every_n_epoch'],
-        gradient_clip_val=config['gradient_clip_val'],
-        precision='bf16-mixed', # we'll use mixed precision
-        num_sanity_val_steps=0,
-        logger=wandb_logger,
-        callbacks=[pushToHub, early_stop_callback]
-)
+    accelerator='cuda',
+    strategy='ddp',
+    devices=4,
+    # strategy="xla_debug",
+    max_epochs=pl_config['max_epochs'],
+    val_check_interval=pl_config['val_check_interval'],
+    check_val_every_n_epoch=pl_config['check_val_every_n_epoch'],
+    gradient_clip_val=pl_config['gradient_clip_val'],
+    precision='bf16-mixed', # we'll use mixed precision
+    num_sanity_val_steps=0,
+    logger=wandb_logger,
+    callbacks=[pushToHub, early_stop_callback]
+    )
+    
 
 print("Training starts.")
 trainer.fit(model_lightning)

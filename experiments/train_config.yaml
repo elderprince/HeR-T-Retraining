@@ -1,0 +1,8 @@
+image_path: /leonardo_work/IscrC_HeR-T/weiwei/HeR-T-Fine-tuning/data/img_test
+max_length: 768
+pretrained_model: /leonardo_work/IscrC_HeR-T/weiwei/HeR-T-Fine-tuning/model/donut-base
+pretrained_processor: /leonardo_work/IscrC_HeR-T/weiwei/HeR-T-Fine-tuning/model/donut-base
+project_name: fine-tuning-test
+log_name: 20250306-test
+save_dir: /leonardo_work/IscrC_HeR-T/weiwei/HeR-T-Fine-tuning/checkpoint
+result_dir: /leonardo_work/IscrC_HeR-T/weiwei/HeR-T-Fine-tuning/result

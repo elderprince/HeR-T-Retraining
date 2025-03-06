@@ -172,3 +172,12 @@ cython_debug/
 
 # Data folder
 data/
+
+# Base model folder
+model/
+
+# Checkpoint, result, output, and log folder
+outputs/
+result/
+checkpoint/
+wandb/

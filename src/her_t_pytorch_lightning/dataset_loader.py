@@ -1,8 +1,10 @@
+import os
 import json
 import torch
 import random
-import utils
+import her_t_pytorch_lightning.utils as utils
 
+from PIL import Image
 from typing import Any, List, Tuple
 from datasets import load_dataset
 from torch.utils.data import Dataset
@@ -202,3 +204,25 @@ class DonutDataset(Dataset):
         # labels[: torch.nonzero(labels == self.prompt_end_token_id).sum() + 1] = self.ignore_id  # model doesn't need to predict prompt (for VQA)
         
         return pixel_values, labels, target_sequence
+    
+class CustomImageDataset(Dataset):
+    def __init__(self, data_dir):
+        self.data_dir = data_dir
+        self.gt_dic = {}
+        self.gt_file = os.path.join(self.data_dir, 'metadata.jsonl')
+        with open(self.gt_file, "r") as gt_file: 
+            for line in gt_file: 
+                gt_json = json.loads(line)
+                file_name = gt_json['file_name']
+                gt = gt_json['ground_truth']
+                self.gt_dic[file_name] = gt
+
+    def __len__(self):
+        return len(self.gt_dic)
+
+    def __getitem__(self, idx):
+        file_name = list(self.gt_dic.keys())[idx]
+        img_path = os.path.join(self.data_dir, file_name)
+        image = Image.open(img_path)
+        gt = self.gt_dic[file_name]
+        return image, gt, file_name

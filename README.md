@@ -1,6 +1,10 @@
 # HeR-T: Herbarium specimen label Recognition Transformer  
 
-![License](https://img.shields.io/github/license/elderprince/HeR-T-Fine-tuning.git)
+## 📃 Paper
+Application of computer vision to the automated extraction of metadata from natural history specimen labels: A case study on herbarium specimens (Under Review)
+
+## 💁 Authors
+Zacchigna, Jacopo; Liu, Weiwei; Pellegrino, Felice Andrea; Peron, Adriano; Roma-Marzio, Francesco; Peruzzi, Lorenzo; Martellos, Stefano
 
 ## 🚀 Overview  
 HeR-T (Herbarium specimen label Recognition Transformer) is a fine-tuned vision-language model designed for automated metadata extraction of history specimen labels, especially herbarium specimen labels. It leverages Donut-base and has been fine-tuned with 55,089 herbarium specimen images from the Herbarium of the University of Pisa (international acronym PI). 
