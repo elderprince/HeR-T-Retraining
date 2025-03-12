@@ -36,14 +36,14 @@ python scripts/train.py --config experiments/train_config.yaml
 ```
 
 ## 📂 Model Checkpoints  
-Download pre-trained weights from [link to model checkpoints].  
+Download pre-trained weights from Hugging Face ([elderprince/HeR-T](https://huggingface.co/elderprince/HeR-T)). 
 
 ## 📜 Dataset  
 Our study was carried out on a dataset of digitized specimens from the Herbarium of the University of Pisa (international acronym PI). The dataset comprises 55,089 specimens, which were digitized and published online using the online database JACQ Virtual Herbaria (http://www.jacq.org/). 
 
 The images are in JPEG format, while the metadata (derived from a manual transcription of the original labels in each specimen) are organized in a spreadsheet, in which each row represents a single specimen. The dataset hosts digital specimens from 97 countries, which were collected in the span of two centuries.
 
-This dataset can also be openly accessed on Global Biodiversity Information Facility (GBIF) [LINK](https://www.gbif.org/dataset/1e98cc26-065e-40ca-9c57-20fa0a2f4981).
+This dataset can also be openly accessed on Global Biodiversity Information Facility (GBIF) ([LINK](https://www.gbif.org/dataset/1e98cc26-065e-40ca-9c57-20fa0a2f4981)).
 
 ## 🏆 Results  
 [Add qualitative results, sample images, and predictions.]
