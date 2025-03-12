@@ -79,7 +79,7 @@ pl_config = {
     'result_path': '/leonardo_work/IscrC_HeR-T/weiwei/HeR-T-Fine-tuning/result',
     'verbose': True, 
     'seed': 16, 
-    'num_workers': 4
+    'num_workers': 1
 }
 model_lightning = DonutModelPLModule(pl_config, processor, model, 
                                      train_dataset, val_dataset)

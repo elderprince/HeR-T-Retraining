@@ -14,10 +14,10 @@ print(device)
 
 kwargs = read_config('experiments/inference_config')
 
-image_path = kwargs[['image_path']]
-pretrained_processor = kwargs[['pretrained_processor']]
-pretrained_model = kwargs[['pretrained_model']]
-output_dir = kwargs[['output_dir']]
+image_path = kwargs['image_path']
+pretrained_processor = kwargs['pretrained_processor']
+pretrained_model = kwargs['pretrained_model']
+output_dir = kwargs['output_dir']
 
 dataset = CustomImageDataset(image_path)
 processor = DonutProcessor.from_pretrained(pretrained_processor)
@@ -25,6 +25,8 @@ model = VisionEncoderDecoderModel.from_pretrained(pretrained_model)
 
 model.eval()
 model.to(device)
+
+print('Data and model are loaded.')
 
 output_list, accs, files = [], [], []
 
@@ -90,14 +92,16 @@ print("Mean accuracy: ", np.mean(accs))
 print("Median accuracy:", np.median(accs))
 print("Standard deviation: ", np.std(accs))
 
-with open(output_file, 'w') as output_pre:
+with open(output_dir + '/output_file.txt', 'w') as output_pre:
     for row in output_list:
         output_pre.write(str(row) + '\n')
 
-with open(accuracy_file, 'w') as acc_pre:
+with open(output_dir + '/accuracy_file.txt', 'w') as acc_pre:
     for row in accs:
         acc_pre.write(str(row) + '\n')
 
-with open(filename_file, 'w') as file_names:
+with open(output_dir + '/filename_file.txt', 'w') as file_names:
     for row in files:
         file_names.write(str(row) + '\n')
+
+print(f"Inference results are saved in {output_dir}")

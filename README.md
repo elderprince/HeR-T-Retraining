@@ -26,41 +26,34 @@ pip install -r requirements.txt
 
 ## 💻 Usage  
 ### Inference  
-```python
-from your_model_package import Model
-
-model = Model.load("path/to/weights")
-result = model.predict("path/to/image.jpg")
-print(result)
+```bash
+python scripts/inference.py --config experiments/inference_config.yaml
 ```
 
 ### Fine-tuning  
 ```bash
-python train.py --config config.yaml
+python scripts/train.py --config experiments/train_config.yaml
 ```
-
-## 📊 Performance  
-| Metric | Value |
-|--------|-------|
-| Accuracy | XX% |
-| F1 Score | XX% |
-| Inference Time | XX ms |
 
 ## 📂 Model Checkpoints  
 Download pre-trained weights from [link to model checkpoints].  
 
 ## 📜 Dataset  
-[Explain the dataset used for fine-tuning, linking to sources if publicly available.]  
+Our study was carried out on a dataset of digitized specimens from the Herbarium of the University of Pisa (international acronym PI). The dataset comprises 55,089 specimens, which were digitized and published online using the online database JACQ Virtual Herbaria (http://www.jacq.org/). 
+
+The images are in JPEG format, while the metadata (derived from a manual transcription of the original labels in each specimen) are organized in a spreadsheet, in which each row represents a single specimen. The dataset hosts digital specimens from 97 countries, which were collected in the span of two centuries.
+
+This dataset can also be openly accessed on Global Biodiversity Information Facility (GBIF) [LINK](https://www.gbif.org/dataset/1e98cc26-065e-40ca-9c57-20fa0a2f4981).
 
 ## 🏆 Results  
-[Add qualitative results, sample images, and predictions.]  
+[Add qualitative results, sample images, and predictions.]
 
-## 🤝 Contributing  
-We welcome contributions! Please check the [CONTRIBUTING.md](CONTRIBUTING.md) file for guidelines.  
+## 🤝 Acknowledgments  
+The authors are grateful to CINECA for allowing the use of their HPC facilities in the framework of the project IsCb8_HeR-T (2024-2025). 
 
 ## 📜 License  
-This project is licensed under the [License Name] License - see the [LICENSE](LICENSE) file for details.  
+This project is licensed under the GNU General Public License - see the [LICENSE](LICENSE) file for details.  
 
 ## 🔗 References  
-- [Paper/Blog Post related to this model]  
-- [Original base model]  
+- Donut 🍩 : Document Understanding Transformer ([LINK](https://github.com/clovaai/donut))
+- Donut-base ([HuggingFace](https://huggingface.co/naver-clova-ix/donut-base))
