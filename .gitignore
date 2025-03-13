@@ -175,9 +175,16 @@ data/
 
 # Base model folder
 model/
+models/
 
 # Checkpoint, result, output, and log folder
 outputs/
 result/
+results/
 checkpoint/
 wandb/
+
+# Notebook folder
+notebooks/
+
+.DS_Store
