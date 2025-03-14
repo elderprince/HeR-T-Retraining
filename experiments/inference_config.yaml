@@ -1,4 +1,4 @@
-image_path: /leonardo_work/IscrC_HeR-T/weiwei/HeR-T-Fine-tuning/data/img_1200x1600/test
-pretrained_processor: /leonardo_work/IscrC_HeR-T/weiwei/HeR-T-Fine-tuning/result/1200x1600/patience7/processor
-pretrained_model: /leonardo_work/IscrC_HeR-T/weiwei/HeR-T-Fine-tuning/result/1200x1600/patience7/model
-output_dir: /leonardo_work/IscrC_HeR-T/weiwei/HeR-T-Fine-tuning/result
+image_path: YOUR_OWN_TEST_IMAGE_PATH
+pretrained_processor: elderprince/HeR-T
+pretrained_model: elderprince/HeR-T
+output_dir: YOUR_OWN_DIR_TO_SAVE_RESULTS

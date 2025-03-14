@@ -1,6 +1,4 @@
-import wandb
 import pytorch_lightning as pl
-from pytorch_lightning.loggers import WandbLogger
 from pytorch_lightning.callbacks import EarlyStopping
 
 from her_t_pytorch_lightning.her_t_pytorch_lightning import DonutModelPLModule
@@ -21,10 +19,9 @@ image_path = kwargs['image_path']
 max_length = kwargs['max_length']
 pretrained_model = kwargs['pretrained_model']
 pretrained_processor = kwargs['pretrained_processor']
-project_name = kwargs['project_name']
-log_name = kwargs['log_name']
 save_dir = kwargs['save_dir']
 result_dir = kwargs['result_dir']
+result_path = kwargs['result_path']
 
 dataset = dataset_loader.data_loader(image_path)
 print('Data Loading completes.')
@@ -76,7 +73,7 @@ pl_config = {
     'val_batch_sizes': 8, 
     'num_nodes': 1, 
     'warmup_steps': 2500, 
-    'result_path': '/leonardo_work/IscrC_HeR-T/weiwei/HeR-T-Fine-tuning/result',
+    'result_path': result_path,
     'verbose': True, 
     'seed': 16, 
     'num_workers': 1
@@ -85,8 +82,6 @@ model_lightning = DonutModelPLModule(pl_config, processor, model,
                                      train_dataset, val_dataset)
 print('PyTorch Lightning Model has been set up.')
 
-wandb.init(mode="offline")
-wandb_logger = WandbLogger(project=project_name, name=log_name)
 early_stop_callback = EarlyStopping(monitor="val_edit_distance", 
                                     verbose=True, mode="min", patience=7)
 pushToHub = utils.PushToHubCallback(save_dir, result_dir)
@@ -102,7 +97,6 @@ trainer = pl.Trainer(
     gradient_clip_val=pl_config['gradient_clip_val'],
     precision='bf16-mixed', # we'll use mixed precision
     num_sanity_val_steps=0,
-    logger=wandb_logger,
     callbacks=[pushToHub, early_stop_callback]
     )
     

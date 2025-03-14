@@ -175,9 +175,19 @@ data/
 
 # Base model folder
 model/
+models/
 
 # Checkpoint, result, output, and log folder
 outputs/
 result/
+results/
 checkpoint/
 wandb/
+
+# Notebook folder
+notebooks/
+
+# Remote HPC submission file
+shell/submission.sbatch
+
+.DS_Store
