@@ -1,8 +1,6 @@
-image_path: /leonardo_work/IscrC_HeR-T/weiwei/HeR-T-Fine-tuning/data/img_test
-max_length: 768
-pretrained_model: /leonardo_work/IscrC_HeR-T/weiwei/HeR-T-Fine-tuning/model/donut-base
-pretrained_processor: /leonardo_work/IscrC_HeR-T/weiwei/HeR-T-Fine-tuning/model/donut-base
-project_name: fine-tuning-test
-log_name: 20250306-test
-save_dir: /leonardo_work/IscrC_HeR-T/weiwei/HeR-T-Fine-tuning/checkpoint
-result_dir: /leonardo_work/IscrC_HeR-T/weiwei/HeR-T-Fine-tuning/result
+image_path: YOUR_OWNN_TEST_IMAGE_PATH
+pretrained_model: naver-clova-ix/donut-base
+pretrained_processor: naver-clova-ix/donut-base
+save_dir: YOUR_OWN_DIR_TO_SAVE_MODEL_CHECKPOINT
+result_dir: YOUR_OWN_DIR_TO_SAVE_FINAL_MODEL
+result_path: YOUR_OWNN_RESULT_PATH_FOR_PYTORCH_LIGHTNING_TRAINING
