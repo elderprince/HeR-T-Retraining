@@ -103,7 +103,7 @@ Below are some examples of the model's predictions on the herbarium specimen lab
 - **Reason**: Complex handwriting texts
 
 #### Worst case sample 2
-![Worst case 2](samples/image-3.png)
+![Worst case 2](samples/image-3.jpg)
 - **Ground Truth**: 
 "Nome_verbatim": "Potentilla speciosa subsp. speciosa Willd."
 "Locality": "Tre potenze legit in editis apennini pistoriensis loco dicto Tre Potenze comunicavit Petrus Savi anno 1830."
@@ -119,7 +119,7 @@ Below are some examples of the model's predictions on the herbarium specimen lab
 "Month": ""
 "Year": "1830"
 - **TED accuracy score**: 0.204
-- **Reason**: More than one specimen in an image
+- **Reason**: Many distracted labels in an image
 
 #### Worst case sample 3
 ![Worst case 3](samples/image-6.png)
